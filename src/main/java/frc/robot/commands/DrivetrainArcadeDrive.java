@@ -1,14 +1,14 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.Drivetrain;
 
 public class DrivetrainArcadeDrive extends CommandBase {
   private final Drivetrain mDrivetrain;
-  private final XboxController mXbox;
+  private final CommandXboxController mXbox;
 
-  public DrivetrainArcadeDrive(Drivetrain drivetrain, XboxController xbox) {
+  public DrivetrainArcadeDrive(Drivetrain drivetrain, CommandXboxController xbox) {
     mDrivetrain = drivetrain;
     mXbox = xbox;
     addRequirements(mDrivetrain);
