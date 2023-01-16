@@ -1,27 +1,27 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Cannon;
+import frc.robot.subsystems.CannonRevolve;
 
-public class CannonRevolve extends CommandBase {
-  private final Cannon mCannon;
+public class CannonRevolveSpin extends CommandBase {
+  private final CannonRevolve mCannonRevolve;
   private final int mTargetNumberOfBarrels;
   private final double mPercentOutput;
   private int mNumberOfBarrelsAdvanced;
   private boolean waitingForLimit;
 
-  public CannonRevolve(Cannon cannon, int targetNumberOfBarrels, double percentOutput) {
-    mCannon = cannon;
+  public CannonRevolveSpin(CannonRevolve cannonRevolve, int targetNumberOfBarrels, double percentOutput) {
+    mCannonRevolve = cannonRevolve;
     mTargetNumberOfBarrels = targetNumberOfBarrels;
     mPercentOutput = percentOutput;
-    addRequirements(mCannon);
+    addRequirements(mCannonRevolve);
   }
 
   @Override
   public void initialize() {
     mNumberOfBarrelsAdvanced = 0;
     
-    if (mCannon.getRevovleLimitSwitch()) {
+    if (mCannonRevolve.getRevolveLimitSwitch()) {
       waitingForLimit = false;
     } else {
       waitingForLimit = true;
@@ -30,15 +30,15 @@ public class CannonRevolve extends CommandBase {
 
   @Override
   public void execute() {
-    mCannon.setPercentOutput(mPercentOutput);
+    mCannonRevolve.setPercentOutput(mPercentOutput);
 
     if (waitingForLimit) {
-      if (mCannon.getRevovleLimitSwitch()) {
+      if (mCannonRevolve.getRevolveLimitSwitch()) {
         mNumberOfBarrelsAdvanced++;
         waitingForLimit = false;
       }
     } else {
-      if (!mCannon.getRevovleLimitSwitch()) {
+      if (!mCannonRevolve.getRevolveLimitSwitch()) {
         waitingForLimit = true;
       }
     }
@@ -46,7 +46,7 @@ public class CannonRevolve extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    mCannon.setPercentOutput(0.0);
+    mCannonRevolve.setPercentOutput(0.0);
   }
 
   @Override
